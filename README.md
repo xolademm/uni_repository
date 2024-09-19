@@ -1,7 +1,3 @@
-Here's a content suggestion for your README file:
-
----
-
 # University Coding Assignments and Projects Repository
 
 Welcome to my university coding assignments and projects repository! This repository contains the various coding projects and assignments I have completed as part of my coursework at Grambling State University. Here, you will find code written in different programming languages, reflecting my journey through diverse courses in computer science and related fields.
