@@ -1,40 +1,102 @@
 import random
 
+def print_hangman(tries):
+    stages = [
+        """
+           -----
+           |   |
+               |
+               |
+               |
+               |
+        """,
+        """
+           -----
+           |   |
+           O   |
+               |
+               |
+               |
+        """,
+        """
+           -----
+           |   |
+           O   |
+           |   |
+               |
+               |
+        """,
+        """
+           -----
+           |   |
+           O   |
+          /|   |
+               |
+               |
+        """,
+        """
+           -----
+           |   |
+           O   |
+          /|\  |
+               |
+               |
+        """,
+        """
+           -----
+           |   |
+           O   |
+          /|\  |
+          /    |
+               |
+        """,
+        """
+           -----
+           |   |
+           O   |
+          /|\  |
+          / \  |
+               |
+        """
+    ]
+    print(stages[6 - tries])
+
+def print_board(word, guessed_letters):
+    display_word = ' '.join([letter if letter in guessed_letters else '_' for letter in word])
+    print(display_word)
+
 def hangman():
-    # List of words to choose from
-    words = ["python", "hangman", "programming", "computer", "algorithm"]
-    word = random.choice(words)  # Randomly choose a word from the list
-    guessed_word = ["_"] * len(word)  # Create a list to store the correctly guessed letters
-    guessed_letters = set()  # Set to store the letters that have already been guessed
-    attempts = 6  # Number of wrong attempts allowed
+    words = ['python', 'java', 'ruby', 'javascript']
+    word = random.choice(words)
+    guessed_letters = set()
+    tries = 6
 
-    print("Welcome to Hangman!")
-    print(" ".join(guessed_word))  # Show the initial empty word with underscores
+    while tries > 0:
+        print_hangman(tries)
+        print_board(word, guessed_letters)
 
-    while attempts > 0:
         guess = input("Guess a letter: ").lower()
 
+        if len(guess) != 1 or not guess.isalpha():
+            print("Please enter a single letter.")
+            continue
+
         if guess in guessed_letters:
-            print(f"You've already guessed '{guess}'. Try a different letter.")
+            print("You already guessed that letter.")
             continue
 
         guessed_letters.add(guess)
 
-        if guess in word:
-            for i, letter in enumerate(word):
-                if letter == guess:
-                    guessed_word[i] = guess
-            print("Good guess!")
-        else:
-            attempts -= 1
-            print(f"Wrong guess! You have {attempts} attempts left.")
+        if guess not in word:
+            tries -= 1
+            print(f"Wrong guess. You have {tries} tries left.")
 
-        print(" ".join(guessed_word))  # Show the current state of the word
-
-        if "_" not in guessed_word:
-            print("Congratulations! You've won!")
+        if all(letter in guessed_letters for letter in word):
+            print("Congratulations! You've guessed the word.")
+            print_board(word, guessed_letters)
             break
     else:
+        print_hangman(tries)
         print(f"Sorry, you've lost. The word was '{word}'.")
 
 if __name__ == "__main__":
